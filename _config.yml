@@ -1,0 +1,5 @@
+name: "nicola"
+markdown: redcarpet
+pygments: true
+exclude:
+  - assets/font-awesome/
