@@ -1,4 +1,5 @@
 name: "nicola"
+baseurl: '/blog'
 markdown: redcarpet
 pygments: true
 exclude:
