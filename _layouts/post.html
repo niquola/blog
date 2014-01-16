@@ -3,12 +3,15 @@ layout: default
 ---
 <h1>
   {{ page.title }}
-  <small>{{ page.date | date_to_string }}</small>
 </h1>
 
 <div class="post">
   {{ content }}
 </div>
+
+<p style="text-align:right;"><i>{{ page.date | date_to_string }} niquola</i></p>
+
+<hr/>
 
 <div id="disqus_thread"></div>
 
