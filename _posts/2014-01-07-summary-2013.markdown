@@ -26,7 +26,7 @@ categories: jekyll update
 ### [SPRUG 6](http://sprug.ru/sprug-meetup-6)
 
 Выступил на "рубишном" митапе c сыроватым докладом про DDD, но познакомился с
-лидерами сообщества [Ильей Зайцевым](https://plus.google.com/u/0/+IlyaZayats/posts) и [Михаилом Вайзманом](https://plus.google.com/u/0/+MikhailVaysman/posts),
+лидерами сообщества [Ильей Зайцем](https://plus.google.com/u/0/+IlyaZayats/posts) и [Михаилом Вайсманом](https://plus.google.com/u/0/+MikhailVaysman/posts),
 а так же с питерскими марсианами -
 [Равилем Байрамгалиным](https://www.facebook.com/brain0pia?fref=ts) и [Андреем Дерябиным](https://plus.google.com/+AndreyDeryabin/posts?hl=ru)
 Начиная с этого митапа начал принимать активное участие в жизни нашего руби сообщества.
