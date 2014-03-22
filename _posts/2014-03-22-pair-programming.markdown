@@ -6,8 +6,10 @@ abstract: "Доклад про парное программирование н�
 categories: xp methodology practice
 ---
 
-  Доклад про парное программирование на [Ag;)e days](http://http://agiledays.ru/)
-  [Слайды](http://niquola.github.io/pair-programming-slieds)
+
+Доклад про парное программирование на [Ag;)e days](http://http://agiledays.ru/)
+
+[Слайды](http://niquola.github.io/pair-programming-slieds)
 
 
 ## Kent Beck
