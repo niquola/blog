@@ -9,7 +9,7 @@ categories: xp methodology practice
 
 Доклад про парное программирование на [Ag;)e days](http://http://agiledays.ru/)
 
-[Слайды](http://niquola.github.io/pair-programming-slieds)
+[Слайды](http://niquola.github.io/pair-programming-slides)
 
 
 ## Kent Beck
