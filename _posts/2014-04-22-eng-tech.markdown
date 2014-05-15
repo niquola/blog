@@ -1,0 +1,18 @@
+---
+layout: post
+title: "Engineering practices"
+date:   2014-03-22 10:42:45
+abstract: "AgileKitchen Spb"
+categories: xp methodology practice
+---
+
+[Agile Kitchen](http://spbagilekitchen.github.io/)
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/WGQ03_hfdf0" frameborder="0" allowfullscreen></iframe>
+
+
+---
+
+* [SLIDES](http://niquola.github.io/spb-agile-kitchen-2014-april-slides/)
+* [TEXT](https://github.com/niquola/spb-agile-kitchen-2014-april-slides/blob/master/README.md)
+

@@ -9,6 +9,8 @@ categories: xp methodology practice
 
 Доклад про парное программирование на [Ag;)e days](http://http://agiledays.ru/)
 
+<iframe src="//player.vimeo.com/video/90645464" width="500" height="313" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
 [Слайды](http://niquola.github.io/pair-programming-slides)
 
 
