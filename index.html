@@ -4,10 +4,8 @@ title: Your New Jekyll Site
 ---
 
 {% for post in site.posts %}
-<h2>
-  <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-  <small>{{ post.date | date_to_string }}</small>
-</h2>
-<p>{{ post.abstract}} </p>
-<hr/>
+<a class="pst" href="{{ site.baseurl }}{{ post.url }}">
+  <h3>{{ post.title }} <small>{{ post.date | date_to_string }}</small> </h3>
+  <p>{{ post.abstract}} </p>
+</a>
 {% endfor %}

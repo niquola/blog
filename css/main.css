@@ -1,6 +1,7 @@
 /*****************************************************************************/
 html, body {
   padding-bottom: 5em;
+  background: #555;
 }
 .avatar {
   border-radius: 100%;
@@ -8,14 +9,50 @@ html, body {
   border: 2px solid black;
 }
 .header, .header:hover {
+  display: block;
   text-decoration: none;
   color: black;
+  text-align: center;
+  margin: .5em;
+  text-align: center;
+  text-shadow: 1px 1px 1px #666;
 }
 .b-w {
-  width: 50em;
+  background: white;
+  width: 60em;
   margin: 1em auto;
+  box-shadow: 1px 1px 2px black;
+  padding-top: 0;
+  padding-bottom: 15em;
+}
+.post {
+  padding: 2em 4em;
 }
 .post img {
   width: 100%;
 }
 
+.pst, .pst:hover, .pst:active, h2.post-title {
+  margin: 0;
+  padding: 1em 2em 1.5em;
+  border-bottom: 1px solid #ddd;
+  display: block;
+  color: #333;
+  text-decoration: none;
+  position: relative;
+}
+
+h2.post-title {
+  margin: 0;
+  padding: 1.5em 2em 1em;
+  border-bottom: 1px solid #ddd;
+  color: #333;
+  text-decoration: none;
+  position: relative;
+}
+.pst small {
+  float: right;
+}
+.pst:hover {
+  background: #eee;
+}
