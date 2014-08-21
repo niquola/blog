@@ -1,0 +1,22 @@
+---
+layout: post
+title:  "jsquery"
+date:   2014-08-20 12:00:00
+abstract: "Postgresql JSON query language"
+categories: postgresql
+---
+
+## JSON(b) query language for postgresql
+
+
+New binary storage for JSON with name [*JSONB*](http://www.postgresql.org/docs/9.4/static/datatype-json.html)
+was introduced in Postgresql 9.4 by [Russian pg team](http://obartunov.livejournal.com/177247.html).
+
+This feature merge advantages document & relational databases.
+Next challenge for pg team is advanced and efficient search among jsonb documents (jsquery and VODKA).
+
+
+This article is light introduction into new postgresql extension  [*jsquery*](https://github.com/akorotkov/jsquery)
+- query language for jsonb documents. This extension under active development and looks very promising.
+
+
