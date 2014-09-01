@@ -187,8 +187,11 @@ FROM resources
 WHERE content @@ '*.given @> ["Henry"]'
 ```
 
-To query jsonb document we use expression: `column @@ '<jsquery expression>'`.
-We could parse text as `jsquery` using: `select 'asd(zzz < 13)'::jsquery;`.
+To query jsonb document we use expression:
+`column @@ '<jsquery expression>'`.
+
+We could parse/cast text as `jsquery` using:
+`select 'asd(zzz < 13)'::jsquery;`.
 
 `jsquery` grammar is described in [jsquery_gram.y](https://github.com/akorotkov/jsquery/blob/master/jsquery_gram.y).
 
