@@ -17,6 +17,75 @@ Next challenge for pg team is advanced and efficient search among jsonb document
 
 
 This article is light introduction into new postgresql extension  [*jsquery*](https://github.com/akorotkov/jsquery)
-- query language for jsonb documents. This extension under active development and looks very promising.
+- query language for jsonb documents.
+This project is under active development and looks very promising.
+
+Let's try it!
 
 
+## Installation
+
+To start we need postgresql with version 9.4 and jsquery extension.
+
+They are not yet available as binary packages so
+we gonna use docker to build postgresql 9.4 & jsquery
+in container for quick start and sandboxing.
+
+Install [docker](https://docs.docker.com/).
+
+You can run docker image `niquola/jsquery` from docker hub:
+
+```
+docker run --name=jsquery -i -t niquola/jsquery /bin/bash
+```
+
+or build it from Dockerfile:
+
+```bash
+cd /tmp
+mkdir pg-jsquery
+cd  pg-jsquery
+wget https://github.com/niquola/day-of-pg-jsquery/blob/master/Dockerfile
+# read/edit Dockerfile
+docker build -t jsquery .
+docker run --name=jsquery -i -t jsquery
+```
+
+This image contains postgresql-9.4 & jsqeury built from sources.
+All pg executables are in /home/dba/bin directory.
+There is initialized cluster in /home/dba/data directory.
+Fill free change Dockerfile to meet your expectations
+about postgresql installation.
+
+Let's start postgres cluster. Inside container:
+
+```
+cd /home/dba
+bin/pg_ctl -D data start # press enter if no shell prompt :)
+bin/psql postgres
+```
+
+# Setup database
+
+In psql create new database, connect to it and create jsquery extension:
+
+```
+create database day_of_jsquery;
+\c day_of_jsquery
+# you can use psql autocompletition
+# start printing name of database or command and press tab
+create extension jsquery;
+# create table
+create table repos ( id serial primary key, content jsonb);
+
+\d docs
+# load into var repos first 100 github repositories
+\set repos `curl https://api.github.com/repositories`
+
+insert into repos (content) select jsonb_array_elements(repos);
+
+# lets select first 10 urls of repositories
+select content->'url' from repos limit 10;
+```
+
+## Queries
