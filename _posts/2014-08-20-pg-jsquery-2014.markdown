@@ -28,7 +28,7 @@ Let's try it!
 To start we need postgresql with version 9.4 and jsquery extension.
 
 They are not yet available as binary packages so
-we gonna use docker to build postgresql 9.4 & jsquery
+we gonna use docker to build postgresql 9.4
 in container for quick start and sandboxing.
 
 Install [docker](https://docs.docker.com/).
@@ -36,7 +36,7 @@ Install [docker](https://docs.docker.com/).
 You can run docker image `niquola/jsquery` from docker hub:
 
 ```
-docker run --name=jsquery -i -t niquola/jsquery /bin/bash
+docker run --name=jsquery -i -t niquola/posgresql:v9.4 /bin/bash
 ```
 
 or build it from Dockerfile:
@@ -47,11 +47,11 @@ mkdir pg-jsquery
 cd  pg-jsquery
 wget https://github.com/niquola/day-of-pg-jsquery/blob/master/Dockerfile
 # read/edit Dockerfile
-docker build -t jsquery .
-docker run --name=jsquery -i -t jsquery
+docker build -t pg .
+docker run --name=jsquery -i -t pg
 ```
 
-This image contains postgresql-9.4 & jsqeury built from sources.
+This image contains postgresql-9.4 built from sources.
 All pg executables are in /home/dba/bin directory.
 There is initialized cluster in /home/dba/data directory.
 Fill free change Dockerfile to meet your expectations
@@ -63,6 +63,30 @@ Let's start postgres cluster. Inside container:
 cd /home/dba
 bin/pg_ctl -D data start # press enter if no shell prompt :)
 bin/psql postgres
+psql> \q # to exit
+```
+
+# Install jsquery
+
+Let's install [jsquery](https://github.com/akorotkov/jsquery.git) from sources.
+In container:
+
+```
+cd /home/db
+cd src/contrib
+git clone https://github.com/akorotkov/jsquery.git
+
+cd jsquery
+make && make install && make installcheck
+
+```
+
+Also install [pgcrypto](http://www.postgresql.org/docs/9.4/static/pgcrypto.html) (we gonna use uuids):
+
+```
+cd /home/db/src/contrib/pgcrypto
+make && make install && make installcheck
+
 ```
 
 # Setup database
@@ -70,22 +94,95 @@ bin/psql postgres
 In psql create new database, connect to it and create jsquery extension:
 
 ```
+cd /home/dba
+bin/psql postgres
+
 create database day_of_jsquery;
 \c day_of_jsquery
 # you can use psql autocompletition
 # start printing name of database or command and press tab
+
 create extension jsquery;
+create extension pgcrypto;
+
 # create table
-create table repos ( id serial primary key, content jsonb);
+create table repos ( id uuid primary key default gen_random_uuid(), content jsonb);
 
-\d docs
-# load into var repos first 100 github repositories
-\set repos `curl https://api.github.com/repositories`
+\d repos
 
-insert into repos (content) select jsonb_array_elements(repos);
+# load into *repos* var repos from github
+\set repos `curl https://api.github.com/search/repositories?q=postgres&sort=stars&order=desc`
 
-# lets select first 10 urls of repositories
-select content->'url' from repos limit 10;
+INSERT INTO repos (content)
+  SELECT jsonb_array_elements(repos);
+
+# lets select repository names
+select content->'name' from repos;
+
+# lets make first jsquery
+SELECT content->'name'
+  FROM repos
+ WHERE content @@ 'name="postgres";
 ```
 
+Read json & jsonb functions documentation and fill free
+to play with functions & `repos` table - http://www.postgresql.org/docs/9.4/static/functions-json.html
+
+# Load test data from health it standard FHIR
+
+In psql create table for resource:
+
+```
+CREATE TABLE resources ( id uuid primary key default gen_random_uuid(), content jsonb);
+```
+
+NOTE: psql support search in history - press <ctrl-r> and start typing part
+of previous command (for example `create ta`) then press tab to navigate options.
+
+Go to shell (press ctrl-z):
+
+```
+cd /home/db
+sudo apt-get install wget unzip
+# download data
+wget http://www.hl7.org/documentcenter/public/standards/FHIR/examples-json.zip
+# unzip
+unzip *.zip -d fhir
+# list
+ls -lah fhir
+# here is evil command &#x1f47f;, which load FHIR data into `resources` table
+
+ls fhir/*json | xargs -I {} bash -c 'echo -e "\set js \`cat {}\`\n INSERT INTO resources (content) SELECT :\x27js\x27::jsonb" | bin/psql day_of_jsquery'
+```
+
+Go back to psql (fg or start it again bin/psql day_of_jsquery):
+
+```
+SELECT count(*) FROM resources;
+```
+
+Here we are ready to start play with jsquery!
+
 ## Queries
+
+`jsquery` does not yet have documentation.
+Best place to find information is to look at [tests](https://github.com/akorotkov/jsquery/blob/master/sql/jsquery.sql)
+
+```sql
+-- let's find all patients by resourceType
+
+SELECT content->'name'
+FROM resources
+WHERE content @@ 'resourceType="Patient"'
+
+-- let's find all Henry
+SELECT content->'name'
+FROM resources
+WHERE content @@ '(resourceType="Patient" AND name.#.given @> ["Henry"])'
+
+-- or like this
+SELECT content->'name'
+FROM resources
+WHERE content @@ '*.given @> ["Henry"]'
+```
+
