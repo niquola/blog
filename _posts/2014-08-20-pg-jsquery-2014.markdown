@@ -181,8 +181,15 @@ FROM resources
 WHERE content @@ '(resourceType="Patient" AND name.#.given @> ["Henry"])'
 
 -- or like this
+
 SELECT content->'name'
 FROM resources
 WHERE content @@ '*.given @> ["Henry"]'
 ```
 
+To query jsonb document we use expression: `column @@ '<jsquery expression>'`.
+We could parse text as `jsquery` using: `select 'asd(zzz < 13)'::jsquery;`.
+
+`jsquery` grammar is described in [jsquery_gram.y](https://github.com/akorotkov/jsquery/blob/master/jsquery_gram.y).
+
+Here is link to visualized & simplified [EBNF rules](http://niquola.github.io/blog/jsquery_ebnf.xhtml)
